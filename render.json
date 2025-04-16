@@ -1,0 +1,13 @@
+{
+  "name": "render",
+  "version": "1.0.0",
+  "description": "Configuração para implantação no Render",
+  "engines": {
+    "node": "16.x"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+}
