@@ -1,5 +1,5 @@
 const express = require('express');
-const {
+const { 
   getPatients,
   getPatient,
   createPatient,
@@ -11,17 +11,13 @@ const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
 
-// Proteger todas as rotas
-router.use(protect);
-
-// Rotas acessíveis para todos os usuários autenticados, exceto pacientes
 router.route('/')
-  .get(authorize('admin', 'director', 'therapist', 'secretary', 'financial'), getPatients)
-  .post(authorize('admin', 'director', 'therapist', 'secretary'), createPatient);
+  .get(protect, getPatients)
+  .post(protect, createPatient);
 
 router.route('/:id')
-  .get(authorize('admin', 'director', 'therapist', 'secretary', 'financial'), getPatient)
-  .put(authorize('admin', 'director', 'therapist', 'secretary'), updatePatient)
-  .delete(authorize('admin', 'director'), deletePatient);
+  .get(protect, getPatient)
+  .put(protect, updatePatient)
+  .delete(protect, authorize('admin', 'director'), deletePatient);
 
 module.exports = router;
